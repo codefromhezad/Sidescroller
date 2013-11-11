@@ -30,6 +30,6 @@ var Defaults = {
 	},
 	
 	viewportPosition: {x: 0, y: 0},
-	playerStart: {x: 2, y: 5},
+	playerStart: {x: 2, y: 3},
 	playerSpeed: 5
 };

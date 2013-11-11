@@ -30,42 +30,44 @@
     
 </head>
 <body>
+	<div id="actions" style="color: #fff;"></div>
     <script>
         
         var game = new Game();
         
         /* Keyboard handling */
         KeyboardJS.on("right", function() {
-            game.viewport.direction.x = 1;
-            game.player.direction.x = 1;
+			game.viewport.direction.x = 1;
+			game.player.direction.x = 1;
+			
+			if( game.player.getAction() != "jump" && game.player.getAction() != "fall" ) {
+				game.player.setAction("run");
+			}
+			
         }, function() {
-            if( game.viewport.direction.x === 1 ) {
-                game.viewport.direction.x = 0;
-            }
-            if( game.player.direction.x === 1 ) {
-                game.player.direction.x = 0;
-            }
+            if( game.player.getAction() == "run" ) {
+				game.player.setAction("idle");
+			}
         });
         
         KeyboardJS.on("left", function() {
-            game.viewport.direction.x = -1;
-            game.player.direction.x = -1;
+			game.viewport.direction.x = -1;
+			game.player.direction.x = -1;
+			
+			if( game.player.getAction() != "jump" && game.player.getAction() != "fall" ) {
+				game.player.setAction("run");
+			}
+			
         }, function() {
-            if( game.viewport.direction.x === -1 ) {
-                game.viewport.direction.x = 0;
-            }
-            if( game.player.direction.x === -1 ) {
-                game.player.direction.x = 0;
-            }
+            if( game.player.getAction() == "run" ) {
+				game.player.setAction("idle");
+			}
         });
         
         KeyboardJS.on("up", function() {
-            if( game.player.getAction() != "fall" ) {
-                game.player.setAction("jump");
-            }
-            
-        }, function() {
-            
+			if( game.player.getAction() != "fall" ) {
+				game.player.setAction("jump");
+			}
         });
         
         game.start();

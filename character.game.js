@@ -20,7 +20,7 @@ var Character = function(game) {
 	
 	this.game.viewport.track(this);
 	
-	this.game.stage.addChild( this );
+	this.game.stage.addChild(this);
 }
 
 Character.constructor = Character;
@@ -58,6 +58,8 @@ Character.prototype.setAction = function(action) {
 	this.oldAction = this.action;
 	this.action = action;
 	
+	document.getElementById('actions').innerHTML = this.action;
+	
 	if( this.oldAction != this.action ) {
 		this.action_timer = 0;
 	}
@@ -82,13 +84,17 @@ Character.prototype.isOnFloor = function() {
 }
 
 Character.prototype.update = function() {
-	// Init handling
-	if( this.getAction() == "idle" )
-		this.setAction("fall");
 	
 	// FMS
 	switch( this.getAction() ) {
-		case "idle": /* do nothing */ break;
+		case "idle":
+			this.direction.x = 0;
+			this.game.viewport.direction.x = 0;
+			
+			
+			
+			break;
+		
 		case "jump":
 			if( this.action_timer == 0 ) {
 				this.velocityY = 10;
@@ -96,21 +102,33 @@ Character.prototype.update = function() {
 			this.moveY(- this.velocityY);
 			this.velocityY -= 0.5;
 			
-			if( this.isOnFloor() ) {
-				this.setAction('idle');
+			if( this.velocityY <= 0 ) {
+				this.setAction('fall');
 			}
 			
 			break;
+			
 		case "fall":
 			if( this.action_timer == 0 ) {
 				this.velocityY = 10;
 			}
+			this.velocityY += 0.5;
 			this.moveY(this.velocityY);
 			
+			var pressed_keys = KeyboardJS.activeKeys();
+			
 			if( this.isOnFloor() ) {
-				this.setAction('idle');
+				if( pressed_keys.indexOf("right") != -1 || pressed_keys.indexOf("left") != -1 ) {
+					this.setAction("run");
+				} else {
+					this.setAction("idle");
+				}
 			}
 			
+			break;
+		case "run":
+			
+			/* Nothing, for now */
 			break;
 	}
 	
