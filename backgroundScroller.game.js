@@ -1,11 +1,13 @@
-var BackgroundScroller = function(stage) {
+var BackgroundScroller = function(game) {
 	
 	this.backgroundLayers = {};
 	
+	this.game = game;
+	
 	for(var tex in Defaults.backgroundLayers) {
 		this.backgroundLayers[tex] = new BackgroundLayer(tex);
-		viewport.track(this.backgroundLayers[tex]);
-		stage.addChild( this.backgroundLayers[tex] );
+		this.game.viewport.track(this.backgroundLayers[tex]);
+		this.game.stage.addChild( this.backgroundLayers[tex] );
 	}
 }
 

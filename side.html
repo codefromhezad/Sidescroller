@@ -1,6 +1,6 @@
 <html>
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
     <title>Side</title>
     <style>
         body {
@@ -9,10 +9,10 @@
             background-color: #000000;
         }
         canvas {
-			margin: auto;
-			display: block;
-			margin-top: 50px;
-		}
+            margin: auto;
+            display: block;
+            margin-top: 50px;
+        }
     </style>
     <script src="pixi.js"></script>
     <script src="keyboard.js"></script>
@@ -26,69 +26,49 @@
     <script src="levelMap.game.js"></script>
     <script src="character.game.js"></script>
     
+    <script src="game.js"></script>
+    
 </head>
 <body>
     <script>
-		
-		/* Init game elements */
-		var stage = new PIXI.Stage(0xFFF);
-		var renderer = PIXI.autoDetectRenderer(
-			Defaults.stageSize[0] * Defaults.stageMap.unitSize[0],
-			Defaults.stageSize[1] * Defaults.stageMap.unitSize[1]
-		);
-		document.body.appendChild(renderer.view);
-	 
-		var bgScroller = new BackgroundScroller(stage);
-		var levelMap = new LevelMap(stage);
-		var player = new Character();
-		stage.addChild( player );
-		
-		/* Keyboard handling */
-		KeyboardJS.on("right", function() {
-			viewport.direction.x = 1;
-			player.direction.x = 1;
-		}, function() {
-			if( viewport.direction.x === 1 ) {
-				viewport.direction.x = 0;
-			}
-			if( player.direction.x === 1 ) {
-				player.direction.x = 0;
-			}
-		});
-		
-		KeyboardJS.on("left", function() {
-			viewport.direction.x = -1;
-			player.direction.x = -1;
-		}, function() {
-			if( viewport.direction.x === -1 ) {
-				viewport.direction.x = 0;
-			}
-			if( player.direction.x === -1 ) {
-				player.direction.x = 0;
-			}
-		});
-		
-		KeyboardJS.on("up", function() {
-			if( player.getAction() != "fall" ) {
-				player.setAction("jump");
-			}
-			
-		}, function() {
-			
-		});
-		
-		/* Start game loop */
-		requestAnimFrame( animate );
-	 
-		function animate() {
-			requestAnimFrame( animate );
-
-			viewport.update();
-			
-			player.update(levelMap);
-			
-			renderer.render(stage);
-		}
+        
+        var game = new Game();
+        
+        /* Keyboard handling */
+        KeyboardJS.on("right", function() {
+            game.viewport.direction.x = 1;
+            game.player.direction.x = 1;
+        }, function() {
+            if( game.viewport.direction.x === 1 ) {
+                game.viewport.direction.x = 0;
+            }
+            if( game.player.direction.x === 1 ) {
+                game.player.direction.x = 0;
+            }
+        });
+        
+        KeyboardJS.on("left", function() {
+            game.viewport.direction.x = -1;
+            game.player.direction.x = -1;
+        }, function() {
+            if( game.viewport.direction.x === -1 ) {
+                game.viewport.direction.x = 0;
+            }
+            if( game.player.direction.x === -1 ) {
+                game.player.direction.x = 0;
+            }
+        });
+        
+        KeyboardJS.on("up", function() {
+            if( game.player.getAction() != "fall" ) {
+                game.player.setAction("jump");
+            }
+            
+        }, function() {
+            
+        });
+        
+        game.start();
  
     </script>
  

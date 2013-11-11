@@ -1,7 +1,9 @@
-var LevelMap = function(stage) {
+var LevelMap = function(game) {
 	
 	this.repository = Defaults.stageMap.mapRepository;
 	this.textures = {};
+	
+	this.game = game;
 	
 	/* Load level map textures */
 	for(var i in this.repository) {
@@ -20,8 +22,8 @@ var LevelMap = function(stage) {
 		if( this.repository[tileIndex] !== null ) {
 			this.levelTiles[i] = new MapTile(i, this.textures[tileIndex]);
 			
-			viewport.track(this.levelTiles[i]);
-			stage.addChild( this.levelTiles[i] );
+			this.game.viewport.track(this.levelTiles[i]);
+			this.game.stage.addChild( this.levelTiles[i] );
 		} else {
 			this.levelTiles[i] = null;
 		}

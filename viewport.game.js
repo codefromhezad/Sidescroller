@@ -75,4 +75,3 @@ Viewport.prototype.update = function() {
 	this.moveY(this.speed * this.direction.y);
 }
 
-viewport = new Viewport(Defaults.viewportPosition);

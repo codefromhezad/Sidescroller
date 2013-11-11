@@ -1,7 +1,9 @@
-var Character = function() {
+var Character = function(game) {
 	
 	texture = PIXI.Texture.fromImage('character.png');
 	PIXI.Sprite.call(this, texture);
+	
+	this.game = game;
 	
 	this.mapPosition = Defaults.playerStart;
 	this.position = Utils.mapPositionToCoordinates(this.mapPosition);
@@ -16,7 +18,9 @@ var Character = function() {
 	
 	this.action_timer = 0;
 	
-	viewport.track(this);
+	this.game.viewport.track(this);
+	
+	this.game.stage.addChild( this );
 }
 
 Character.constructor = Character;
@@ -63,8 +67,8 @@ Character.prototype.getAction = function() {
 	return this.action;
 }
 
-Character.prototype.isOnFloor = function(levelMap) {
-	if( levelMap.levelTiles[this.mapPosition.x + (this.mapPosition.y + 1) * Defaults.stageSize[0]] === null ) {
+Character.prototype.isOnFloor = function() {
+	if( this.game.levelMap.levelTiles[this.mapPosition.x + (this.mapPosition.y + 1) * Defaults.stageSize[0]] === null ) {
 		return false;
 	}
 	var lastGoodPosition = Utils.mapPositionToCoordinates(this.mapPosition);
@@ -75,7 +79,7 @@ Character.prototype.isOnFloor = function(levelMap) {
 	return true;
 }
 
-Character.prototype.update = function(levelMap) {
+Character.prototype.update = function() {
 	// Init handling
 	if( this.getAction() == "idle" )
 		this.setAction("fall");
@@ -90,7 +94,7 @@ Character.prototype.update = function(levelMap) {
 			this.moveY(- this.velocityY);
 			this.velocityY -= 0.5;
 			
-			if( this.isOnFloor(levelMap) ) {
+			if( this.isOnFloor() ) {
 				this.setAction('idle');
 			}
 			
@@ -101,7 +105,7 @@ Character.prototype.update = function(levelMap) {
 			}
 			this.moveY(this.velocityY);
 			
-			if( this.isOnFloor(levelMap) ) {
+			if( this.isOnFloor() ) {
 				this.setAction('idle');
 			}
 			
