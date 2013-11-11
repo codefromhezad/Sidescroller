@@ -4,6 +4,10 @@ var Utils = {
 		return {x: number - y * sizeX, y: y};
 	},
 	
+	packToX: function(nx, ny, sizeX) {
+		return nx + ny * sizeX
+	},
+	
 	mapPositionToCoordinates: function(mapPosition) {
 		return {
 			x: mapPosition.x * Defaults.stageMap.unitSize[0],

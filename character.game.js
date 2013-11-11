@@ -68,7 +68,9 @@ Character.prototype.getAction = function() {
 }
 
 Character.prototype.isOnFloor = function() {
-	if( this.game.levelMap.levelTiles[this.mapPosition.x + (this.mapPosition.y + 1) * Defaults.stageSize[0]] === null ) {
+	var tileIndex = Utils.packToX(this.mapPosition.x, this.mapPosition.y + 1, Defaults.stageSize[0]);
+	
+	if( this.game.levelMap.levelTiles[tileIndex] === null ) {
 		return false;
 	}
 	var lastGoodPosition = Utils.mapPositionToCoordinates(this.mapPosition);
