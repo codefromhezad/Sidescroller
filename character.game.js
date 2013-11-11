@@ -68,7 +68,7 @@ Character.prototype.getAction = function() {
 }
 
 Character.prototype.isOnFloor = function() {
-	var tileIndex = Utils.packToX(this.mapPosition.x, this.mapPosition.y + 1, Defaults.stageSize[0]);
+	var tileIndex = Utils.packToX(this.mapPosition.x, this.mapPosition.y + 1, Defaults.stageMap.mapSize[0]);
 	
 	if( this.game.levelMap.levelTiles[tileIndex] === null ) {
 		return false;
