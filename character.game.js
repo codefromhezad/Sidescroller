@@ -91,8 +91,6 @@ Character.prototype.update = function() {
 			this.direction.x = 0;
 			this.game.viewport.direction.x = 0;
 			
-			
-			
 			break;
 		
 		case "jump":

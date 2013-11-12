@@ -28,8 +28,9 @@ var Game = function() {
 			thisGame.player.update();
 			
 			if( this.game.show_log === true ) {
-				document.getElementById('log').innerHTML = "Action: " + thisGame.player.action + "<br />"+
-														   "Map Position: " + thisGame.player.mapPosition.x + ", " + thisGame.player.mapPosition.y;
+				document.getElementById('log').innerHTML = "Player Action: ............ " + thisGame.player.action + "<br />" +
+														   "Player Position on Map: ... " + thisGame.player.mapPosition.x + ", " + thisGame.player.mapPosition.y + "<br />" +
+														   "Player Coordinates: ....... " + thisGame.player.position.x + ", " + thisGame.player.position.y;
 			}
 
 			thisGame.renderer.render(thisGame.stage);
