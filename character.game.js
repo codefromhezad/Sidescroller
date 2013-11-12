@@ -8,6 +8,7 @@ var Character = function(game) {
 	this.mapPosition = Defaults.playerStart;
 	this.position = Utils.mapPositionToCoordinates(this.mapPosition);
 
+	this.anchor.x = 0;
 	this.anchor.y = 0.2;
 	
 	this.speed = Defaults.playerSpeed;
@@ -28,14 +29,18 @@ var Character = function(game) {
 Character.constructor = Character;
 Character.prototype = Object.create(PIXI.Sprite.prototype);
 
+Character.prototype.updateMapPosition = function() {
+	this.mapPosition = Utils.coordinatesToMapPosition(this.position);
+}
+
 Character.prototype.setX = function(newPX) {
 	this.position.x = newPX;
-	this.mapPosition = Utils.coordinatesToMapPosition(this.position);
+	this.updateMapPosition();
 }
 
 Character.prototype.setY = function(newPY) {
 	this.position.y = newPY;
-	this.mapPosition = Utils.coordinatesToMapPosition(this.position);
+	this.updateMapPosition();
 }
 
 Character.prototype.getX = function() {
@@ -85,6 +90,20 @@ Character.prototype.moveToClosestFloor = function() {
 	this.moveY( - yDiff);
 }
 
+Character.prototype.isColliding = function() {
+	
+	var rightTileIndex = Utils.packToX(this.mapPosition.x + 1, this.mapPosition.y, Defaults.stageMap.mapSize[0]);
+	var leftTileIndex = Utils.packToX(this.mapPosition.x, this.mapPosition.y, Defaults.stageMap.mapSize[0]);
+	
+	if( this.game.levelMap.levelTiles[leftTileIndex] !== null  && this.direction.x < 0 ||
+		this.game.levelMap.levelTiles[rightTileIndex] !== null && this.direction.x > 0) {
+
+		return true;
+	}
+	
+	return false;
+}
+
 Character.prototype.update = function() {
 	
 	// FMS
@@ -118,7 +137,9 @@ Character.prototype.update = function() {
 			var pressed_keys = KeyboardJS.activeKeys();
 			
 			if( this.isOnFloor() ) {
+				
 				this.moveToClosestFloor();
+				
 				if( pressed_keys.indexOf("right") != -1 || pressed_keys.indexOf("left") != -1 ) {
 					this.setAction("run");
 				} else {
@@ -139,5 +160,8 @@ Character.prototype.update = function() {
 	this.action_timer += 0.1;
 	
 	// Proper movement
-	this.moveX(this.speed * this.direction.x);
+	if( ! this.isColliding() ) {
+		this.moveX(this.speed * this.direction.x);
+	}
+	
 }

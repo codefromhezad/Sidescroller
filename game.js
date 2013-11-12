@@ -31,7 +31,8 @@ var Game = function() {
 				document.getElementById('log').innerHTML = "Player Action: ............ " + thisGame.player.action + "<br />" +
 														   "Player On Floor ? ......... " + thisGame.player.isOnFloor() + "<br />" +
 														   "Player Position on Map: ... " + thisGame.player.mapPosition.x + ", " + thisGame.player.mapPosition.y + "<br />" +
-														   "Player Coordinates: ....... " + thisGame.player.position.x + ", " + thisGame.player.position.y;
+														   "Player Coordinates: ....... " + thisGame.player.position.x + ", " + thisGame.player.position.y + "<br />" +
+														   "Player Is Colliding ? ..... " + thisGame.player.isColliding();
 			}
 
 			thisGame.renderer.render(thisGame.stage);
