@@ -16,9 +16,9 @@ var Character = function(game) {
 	this.action = null;
 	this.oldAction = this.action;
 	
-	this.setAction("idle");
-
 	this.action_timer = 0;
+
+	this.setAction("idle");
 	
 	//this.game.viewport.track(this);
 	
@@ -59,8 +59,8 @@ Character.prototype.moveY = function(units) {
 Character.prototype.setAction = function(action) {
 	this.oldAction = this.action;
 	this.action = action;	
-	
-	if( this.oldAction != this.action ) {
+
+	if( this.oldAction !== this.action ) {
 		this.action_timer = 0;
 	}
 }
@@ -75,12 +75,14 @@ Character.prototype.isOnFloor = function() {
 	if( this.game.levelMap.levelTiles[tileIndex] === null ) {
 		return false;
 	}
-	var lastGoodPosition = Utils.mapPositionToCoordinates(this.mapPosition);
-	var yDiff = this.position.y - lastGoodPosition.y;
-	
-	this.moveY( - yDiff);
 		
 	return true;
+}
+
+Character.prototype.moveToClosestFloor = function() {
+	var lastGoodPosition = Utils.mapPositionToCoordinates(this.mapPosition);
+	var yDiff = this.position.y - lastGoodPosition.y;
+	this.moveY( - yDiff);
 }
 
 Character.prototype.update = function() {
@@ -94,28 +96,29 @@ Character.prototype.update = function() {
 			break;
 		
 		case "jump":
-			if( this.action_timer == 0 ) {
-				this.velocityY = 10;
+			if( this.action_timer == 0.0 ) {
+				this.velocityY = 10.0;
 			}
 			this.moveY(- this.velocityY);
 			this.velocityY -= 0.5;
 			
-			if( this.velocityY <= 0 ) {
+			if( this.velocityY <= 0.0 ) {
 				this.setAction('fall');
 			}
 			
 			break;
 			
 		case "fall":
-			if( this.action_timer == 0 ) {
-				this.velocityY = 10;
+			if( this.action_timer == 0.0 ) {
+				this.velocityY = 0.0;
 			}
-			this.velocityY += 0.5;
 			this.moveY(this.velocityY);
-			
+			this.velocityY += 0.5;
+
 			var pressed_keys = KeyboardJS.activeKeys();
 			
 			if( this.isOnFloor() ) {
+				this.moveToClosestFloor();
 				if( pressed_keys.indexOf("right") != -1 || pressed_keys.indexOf("left") != -1 ) {
 					this.setAction("run");
 				} else {
@@ -126,10 +129,13 @@ Character.prototype.update = function() {
 			break;
 		case "run":
 			
-			/* Nothing, for now */
+			if( ! this.isOnFloor() ) {
+				this.setAction('fall');
+			}
+			
 			break;
 	}
-	
+
 	this.action_timer += 0.1;
 	
 	// Proper movement
