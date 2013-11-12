@@ -9,7 +9,7 @@ var Game = function() {
 	
 	this.show_log = true;
 
-	this.viewport = new Viewport(Defaults.viewportPosition);
+	//this.viewport = new Viewport(Defaults.viewportPosition);
 	
 	this.bgScroller = new BackgroundScroller(this);
 	this.levelMap = new LevelMap(this);
@@ -23,7 +23,7 @@ var Game = function() {
 		function animate() {
 			requestAnimFrame( animate );
 
-			thisGame.viewport.update();
+			//thisGame.viewport.update();
 			
 			thisGame.player.update();
 			

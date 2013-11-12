@@ -7,7 +7,7 @@ var Character = function(game) {
 	
 	this.mapPosition = Defaults.playerStart;
 	this.position = Utils.mapPositionToCoordinates(this.mapPosition);
-	
+
 	this.anchor.y = 0.2;
 	
 	this.speed = Defaults.playerSpeed;
@@ -20,7 +20,7 @@ var Character = function(game) {
 
 	this.action_timer = 0;
 	
-	this.game.viewport.track(this);
+	//this.game.viewport.track(this);
 	
 	this.game.stage.addChild(this);
 }
@@ -77,8 +77,8 @@ Character.prototype.isOnFloor = function() {
 	}
 	var lastGoodPosition = Utils.mapPositionToCoordinates(this.mapPosition);
 	var yDiff = this.position.y - lastGoodPosition.y;
-		
-	this.position.y -= yDiff;
+	
+	this.moveY( - yDiff);
 		
 	return true;
 }
@@ -89,7 +89,7 @@ Character.prototype.update = function() {
 	switch( this.getAction() ) {
 		case "idle":
 			this.direction.x = 0;
-			this.game.viewport.direction.x = 0;
+			//this.game.viewport.direction.x = 0;
 			
 			break;
 		

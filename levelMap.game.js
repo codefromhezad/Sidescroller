@@ -22,7 +22,7 @@ var LevelMap = function(game) {
 		if( this.repository[tileIndex] !== null ) {
 			this.levelTiles[i] = new MapTile(i, this.textures[tileIndex]);
 			
-			this.game.viewport.track(this.levelTiles[i]);
+			//this.game.viewport.track(this.levelTiles[i]);
 			this.game.stage.addChild( this.levelTiles[i] );
 		} else {
 			this.levelTiles[i] = null;

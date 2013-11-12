@@ -37,7 +37,7 @@
         
         /* Keyboard handling */
         KeyboardJS.on("right", function() {
-			game.viewport.direction.x = 1;
+			//game.viewport.direction.x = 1;
 			game.player.direction.x = 1;
 			
 			if( game.player.getAction() != "jump" && game.player.getAction() != "fall" ) {
@@ -51,7 +51,7 @@
         });
         
         KeyboardJS.on("left", function() {
-			game.viewport.direction.x = -1;
+			//game.viewport.direction.x = -1;
 			game.player.direction.x = -1;
 			
 			if( game.player.getAction() != "jump" && game.player.getAction() != "fall" ) {
