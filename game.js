@@ -8,7 +8,7 @@ var Game = function() {
 	document.body.appendChild(this.renderer.view);
 	
 	this.show_log = true;
-	
+
 	this.viewport = new Viewport(Defaults.viewportPosition);
 	
 	this.bgScroller = new BackgroundScroller(this);
@@ -27,6 +27,11 @@ var Game = function() {
 			
 			thisGame.player.update();
 			
+			if( this.game.show_log === true ) {
+				document.getElementById('log').innerHTML = "Action: " + thisGame.player.action + "<br />"+
+														   "Map Position: " + thisGame.player.mapPosition.x + ", " + thisGame.player.mapPosition.y;
+			}
+
 			thisGame.renderer.render(thisGame.stage);
 		}
 	}

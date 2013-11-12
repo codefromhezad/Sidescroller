@@ -60,10 +60,6 @@ Character.prototype.setAction = function(action) {
 	this.oldAction = this.action;
 	this.action = action;	
 	
-	if( this.game.show_log === true ) {
-		document.getElementById('log').innerHTML = this.action + "<br />";
-	}
-	
 	if( this.oldAction != this.action ) {
 		this.action_timer = 0;
 	}
