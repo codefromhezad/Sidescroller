@@ -13,9 +13,11 @@ var Character = function(game) {
 	this.speed = Defaults.playerSpeed;
 	this.direction = {x: 0, y: 0};
 	
-	this.action = "idle";
+	this.action = null;
 	this.oldAction = this.action;
 	
+	this.setAction("idle");
+
 	this.action_timer = 0;
 	
 	this.game.viewport.track(this);
@@ -56,9 +58,11 @@ Character.prototype.moveY = function(units) {
 
 Character.prototype.setAction = function(action) {
 	this.oldAction = this.action;
-	this.action = action;
+	this.action = action;	
 	
-	document.getElementById('actions').innerHTML = this.action;
+	if( this.game.show_log === true ) {
+		document.getElementById('log').innerHTML = this.action + "<br />";
+	}
 	
 	if( this.oldAction != this.action ) {
 		this.action_timer = 0;
