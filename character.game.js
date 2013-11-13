@@ -8,7 +8,7 @@ var Character = function(game) {
 	this.mapPosition = Defaults.playerStart;
 	this.position = Utils.mapPositionToCoordinates(this.mapPosition);
 
-	this.anchor.x = 0;
+	this.anchor.x = 0.5;
 	this.anchor.y = 0.2;
 	
 	this.speed = Defaults.playerSpeed;
@@ -91,9 +91,11 @@ Character.prototype.moveToClosestFloor = function() {
 }
 
 Character.prototype.isColliding = function() {
+	var nx = Math.floor( (this.position.x - this.width * 0.5) / Defaults.stageMap.unitSize[0] );
+	var nxPlus1 = Math.floor( (this.position.x + this.width * 0.5) / Defaults.stageMap.unitSize[0] );
 	
-	var rightTileIndex = Utils.packToX(this.mapPosition.x + 1, this.mapPosition.y, Defaults.stageMap.mapSize[0]);
-	var leftTileIndex = Utils.packToX(this.mapPosition.x, this.mapPosition.y, Defaults.stageMap.mapSize[0]);
+	var rightTileIndex = Utils.packToX(nxPlus1, this.mapPosition.y, Defaults.stageMap.mapSize[0]);
+	var leftTileIndex = Utils.packToX(nx, this.mapPosition.y, Defaults.stageMap.mapSize[0]);
 	
 	if( this.game.levelMap.levelTiles[leftTileIndex] !== null  && this.direction.x < 0 ||
 		this.game.levelMap.levelTiles[rightTileIndex] !== null && this.direction.x > 0) {
