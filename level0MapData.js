@@ -30,6 +30,8 @@ var Defaults = {
 	},
 	
 	viewportPosition: {x: 0, y: 0},
+
+	playerSpriteSize: {x: 64, y: 64},
 	playerStart: {x: 2, y: 3},
 	playerSpeed: 5
 };
